@@ -16,18 +16,25 @@ Este ejercicio tiene una duración aproximada de 25 minutos.
 ### 1. Crear un workspace
 Navegué a la página de inicio de Microsoft Fabric e inicié sesión con mis credenciales. En la barra de menú de la izquierda, seleccioné **Workspaces** (el icono similar a 🗇). Creé un nuevo workspace con un nombre de mi elección, seleccionando un modo de licencia que incluye capacidad de Fabric (Trial, Premium o Fabric). Cuando se abrió el nuevo workspace, estaba vacío.
 
-> ![Workspace vacío en Fabric](1.png)
+> ![Workspace vacío en Fabric](evh_img/1.%20workspace%20created.png)
 
 ### 2. Crear un Eventhouse
 En la barra de menú de la izquierda, seleccioné **Workloads**. Luego, seleccioné el mosaico **Real-Time Intelligence**. En la página de Real-Time Intelligence, seleccioné el mosaico **Real-Time Intelligence Sample** y luego **Bike Rental Data**. Esto creó automáticamente un eventhouse llamado `Bike_Database`.
 
-> ![Workloads y acceso a Real-Time Intelligence](2.png)
-> ![Creación de samples con Bike Rental Data](3.png)
+> ![Workloads y acceso a Real-Time Intelligence](evh_img/2.%20real%20tiem%20intellidence%20sample.png)
+> ![Creación de samples con Bike Rental Data](evh_img/3.%20real%20tiem%20rental%20bike%20sample.png)
 
 En el panel de la izquierda, noté que mi eventhouse contenía una base de datos KQL con el mismo nombre que el eventhouse. Verifiqué que también se había creado una tabla `Bikestream`.
 
-> ![Eventhouse creado con carpeta Bike_sample](4.png)
-> ![Elementos del sample: Bike_Eventhouse y Bike_Database](5.png)
+> ![Eventhouse creado con carpeta Bike_sample](evh_img/4.%20sample%20downloaded.png)
+
+> ![Elementos del sample: Bike_Eventhouse y Bike_Database](evh_img/5.%20sample%20eventhouse.png)
+
+> ![Elementos del sample: Bike_Eventhouse y Bike_Database](evh_img/6.%20open%20rental%20bike%20file.png)
+
+> ![Elementos del sample: Bike_Eventhouse y Bike_Database](evh_img/7.%20Bikestream%20created.png)
+
+> ![Elementos del sample: Bike_Eventhouse y Bike_Database](evh_img/8.%20default%20query%20set.png)
 
 ### 3. Consultar datos con KQL
 Kusto Query Language (KQL) es un lenguaje intuitivo y completo que puedo usar para consultar una base de datos KQL.
@@ -43,7 +50,7 @@ Bikestream
 
 Seleccioné el código de la consulta y lo ejecuté para devolver 100 filas de la tabla.
 
-> ![Consulta take 100 ejecutada](6.png)
+> ![Consulta take 100 ejecutada](evh_img/9.%20Query%20runned.png)
 
 Puedo ser más preciso añadiendo atributos específicos que quiero consultar usando la palabra clave `project` y luego usando la palabra clave `take` para indicar al motor cuántos registros devolver.
 
@@ -55,7 +62,7 @@ Bikestream
 | take 10
 
 
-> ![Consulta project Street, No_Bikes](7.png)
+> ![Consulta project Street, No_Bikes](evh_img/10.%20New%20query.png)
 
 Otra práctica común en el análisis es renombrar columnas en el queryset para hacerlas más fáciles de usar.
 
@@ -66,7 +73,7 @@ Bikestream
 | take 10
 
 
-> ![Consulta con columna renombrada Number of Empty Docks](8.png)
+> ![Consulta con columna renombrada Number of Empty Docks](evh_img/11.%20Same%20result%20now%20with%20project%20query.png)
 
 #### 3.2. Resumir datos con KQL
 Puedo usar la palabra clave `summarize` con una función para agregar y manipular datos.
@@ -77,7 +84,7 @@ Bikestream
 | summarize ["Total Number of Bikes"] = sum(No_Bikes)
 
 
-> ![Consulta summarize con sum(No_Bikes)](9.png)
+> ![Consulta summarize con sum(No_Bikes)](evh_img/12.%20summarize%20query.png)
 
 Puedo agrupar los datos resumidos por una columna o expresión específica.
 
@@ -88,7 +95,7 @@ Bikestream
 | project Neighbourhood, ["Total Number of Bikes"]
 
 
-> ![Consulta summarize agrupada por Neighbourhood](10.png)
+> ![Consulta summarize agrupada por Neighbourhood](evh_img/13.%20grouping%20query%20Primera%20consulta%20Si%20un%20barrio%20no%20tiene%20nombre%20(es%20nulo%20o%20texto%20vacío),%20lo%20reemplaza%20automáticamente%20por%20la%20etiqueta%20Unidentified..png)
 
 Si alguno de los puntos de bicicletas tiene una entrada nula o vacía para el barrio, los resultados del resumen incluirán un valor en blanco, lo cual nunca es bueno para el análisis.
 
@@ -99,7 +106,7 @@ Bikestream
 | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
 
 
-> ![Consulta con case para agrupar Unidentified](11.png)
+> ![Consulta con case para agrupar Unidentified](evh_img/14%20grouping%20query%20giving%20original%20value.png)
 
 > **Nota:** Como este conjunto de datos de ejemplo está bien mantenido, es posible que no tenga un campo `Unidentified` en el resultado de la consulta.
 
@@ -114,7 +121,7 @@ Bikestream
 | sort by Neighbourhood asc
 
 
-> ![Consulta con sort by Neighbourhood asc](12.png)
+> ![Consulta con sort by Neighbourhood asc](evh_img/15.%20sort%20query.png)
 
 Modifiqué la consulta de la siguiente manera y la ejecuté de nuevo, notando que el operador `order by` funciona de la misma manera que `sort by`:
 
@@ -124,7 +131,7 @@ Bikestream
 | order by Neighbourhood asc
 
 
-> ![Consulta con order by Neighbourhood asc](13.png)
+> ![Consulta con order by Neighbourhood asc](evh_img/16.%20modify%20query%20.png)
 
 #### 3.4. Filtrar datos con KQL
 En KQL, la cláusula `where` se utiliza para filtrar datos. Puedo combinar condiciones en una cláusula `where` usando los operadores lógicos `and` y `or`.
@@ -138,7 +145,7 @@ Bikestream
 | sort by Neighbourhood asc
 
 
-> ![Consulta filtrada para Chelsea](14.png)
+> ![Consulta filtrada para Chelsea](evh_img/17.%20where%20clause%20query.png)
 
 ### 4. Consultar datos con Transact-SQL
 KQL Database no admite Transact-SQL de forma nativa, pero proporciona un endpoint T-SQL que emula Microsoft SQL Server y permite ejecutar consultas T-SQL sobre los datos. El endpoint T-SQL tiene algunas limitaciones y diferencias con respecto al SQL Server nativo. Por ejemplo, no admite la creación, alteración o eliminación de tablas, ni la inserción, actualización o eliminación de datos. Tampoco admite algunas funciones y sintaxis T-SQL que no son compatibles con KQL. Fue creado para permitir que los sistemas que no admiten KQL usen T-SQL para consultar los datos dentro de una base de datos KQL. Por lo tanto, se recomienda usar KQL como lenguaje de consulta principal para KQL Database, ya que ofrece más capacidades y rendimiento que T-SQL. También se pueden usar algunas funciones SQL compatibles con KQL, como `count`, `sum`, `avg`, `min`, `max`, etc.
@@ -149,7 +156,7 @@ En mi queryset, añadí y ejecuté la siguiente consulta Transact-SQL:
 SELECT TOP 100 * from Bikestream
 
 
-> ![Consulta SELECT TOP 100 con T-SQL](15.png)
+> ![Consulta SELECT TOP 100 con T-SQL](evh_img/18.%20sql%20query%20set.png)
 
 Modifiqué la consulta de la siguiente manera para recuperar columnas específicas:
 
@@ -157,7 +164,7 @@ SELECT TOP 10 Street, No_Bikes
 FROM Bikestream
 
 
-> ![Consulta SELECT TOP 10 Street, No_Bikes](16.png)
+> ![Consulta SELECT TOP 10 Street, No_Bikes](evh_img/19.%20modify%20sql%20query.png)
 
 Modifiqué la consulta para asignar un alias que renombre `No_Empty_Docks` a un nombre más fácil de usar.
 
@@ -165,7 +172,7 @@ SELECT TOP 10 Street, No_Empty_Docks as [Number of Empty Docks]
 from Bikestream
 
 
-> ![Consulta con alias Number of Empty Docks](17.png)
+> ![Consulta con alias Number of Empty Docks](evh_img/20.%20No%20emply%20docks%20sql%20query.png)
 
 #### 4.2. Resumir datos con Transact-SQL
 Ejecuté la siguiente consulta para encontrar el número total de bicicletas disponibles:
@@ -174,7 +181,7 @@ SELECT sum(No_Bikes) AS [Total Number of Bikes]
 FROM Bikestream
 
 
-> ![Consulta sum(No_Bikes) con T-SQL](18.png)
+> ![Consulta sum(No_Bikes) con T-SQL](evh_img/21.%20sql%20transac%20summary.png)
 
 Modifiqué la consulta para agrupar el número total de bicicletas por barrio:
 
@@ -183,7 +190,7 @@ FROM Bikestream
 GROUP BY Neighbourhood
 
 
-> ![Consulta con GROUP BY Neighbourhood](19.png)
+> ![Consulta con GROUP BY Neighbourhood](evh_img/22.%20sql%20transac%20group%20query.png)
 
 Modifiqué la consulta aún más para usar una declaración `CASE` para agrupar los puntos de bicicletas con origen desconocido en una categoría `Unidentified` para su seguimiento.
 
@@ -199,7 +206,7 @@ ELSE Neighbourhood
 END;
 
 
-> ![Consulta con CASE para Unidentified](20.png)
+> ![Consulta con CASE para Unidentified](evh_img/23.%20sql%20transc%20else%20query.png)
 
 #### 4.3. Ordenar datos con Transact-SQL
 Ejecuté la siguiente consulta para ordenar los resultados agrupados por barrio:
@@ -217,7 +224,7 @@ END
 ORDER BY Neighbourhood ASC;
 
 
-> ![Consulta con ORDER BY Neighbourhood ASC](21.png)
+> ![Consulta con ORDER BY Neighbourhood ASC](evh_img/24.%20sort%20data%20using%20sql%20transac.png)
 
 #### 4.4. Filtrar datos con Transact-SQL
 Ejecuté la siguiente consulta para filtrar los datos agrupados de modo que solo se incluyan las filas con un barrio de "Chelsea" en los resultados.
@@ -236,16 +243,8 @@ HAVING Neighbourhood = 'Chelsea'
 ORDER BY Neighbourhood ASC;
 
 
-> ![Consulta con HAVING Neighbourhood = 'Chelsea'](22.png)
+> ![Consulta con HAVING Neighbourhood = 'Chelsea'](evh_img/25.%20filter%20data%20transac%20sql%20.png)
 
-### 5. Limpiar recursos
-En este ejercicio, he creado un eventhouse y he consultado datos usando KQL y SQL.
-
-Cuando terminé de explorar mi base de datos KQL, eliminé el workspace que creé para este ejercicio.
-
-En la barra de la izquierda, seleccioné el icono de mi workspace.
-En la barra de herramientas, seleccioné **Workspace settings**.
-En la sección **General**, seleccioné **Remove this workspace**.
 
 ---
 
