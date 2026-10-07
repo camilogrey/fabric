@@ -249,3 +249,19 @@ ORDER BY Neighbourhood ASC;
 ---
 
 **Laboratorio completado**
+
+**Proximo Labs**
+
+https://learn.microsoft.com/en-us/training/modules/implement-cicd-in-fabric/6-exercise-implement-deployment-pipelines
+
+https://learn.microsoft.com/en-us/training/modules/get-started-copilot-fabric-data-warehouse/exercise-copilot-fabric-data-warehouse
+
+https://learn.microsoft.com/en-us/training/modules/query-data-kql-database-microsoft-fabric/5-exercise
+
+https://learn.microsoft.com/en-us/training/modules/query-data-kql-database-microsoft-fabric/5-exercise
+
+https://learn.microsoft.com/en-us/training/modules/explore-event-streams-microsoft-fabric/5-exercise
+
+https://learn.microsoft.com/en-us/training/modules/create-real-time-dashboards-microsoft-fabric/5-exercise
+
+https://learn.microsoft.com/en-us/training/modules/describe-medallion-architecture/6-exercise
